@@ -1,7 +1,7 @@
 
 package Forms;
 
-import Class.ConnectDB;
+import Conntroller.ConnectDB;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +35,11 @@ public class frmPosition extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    private void SetDefaultText(){
+        txtPositionID.setText("Auto ID");
+        txtPositionName.setText("");
+        txtPositionName.requestFocus();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,10 +77,20 @@ public class frmPosition extends javax.swing.JInternalFrame {
 
         btnDelete.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnDelete.setText("ລົບອອກ");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnDelete);
 
         btnCancel.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnCancel.setText("ຍົກເລີກ");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancel);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 153, 255)));
@@ -146,6 +161,11 @@ public class frmPosition extends javax.swing.JInternalFrame {
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.setRowHeight(25);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(100);
@@ -187,19 +207,60 @@ public class frmPosition extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            Connection c =ConnectDB.getConection();
-            String insert = "insert into tbl_Positions(PostionName)values(?)";
-            PreparedStatement p = c.prepareStatement(insert);
-            p.setString(1, txtPositionName.getText());
-            p.executeUpdate();
-            p.close();
+            Connection c =ConnectDB.getConection(); 
+            if(txtPositionID.getText().equals("Auto ID")){
+                String insert = "insert into tbl_Positions(PostionName)values(?)";
+                PreparedStatement p = c.prepareStatement(insert);
+                p.setString(1, txtPositionName.getText());
+                p.executeUpdate();
+                p.close();
+            }else{
+                String update = "Update tbl_Positions set PostionName=? where PositionID=?";
+                PreparedStatement p = c.prepareStatement(update);
+                p.setString(1, txtPositionName.getText().trim());
+                p.setInt(2, Integer.parseInt(txtPositionID.getText()));
+                p.executeUpdate();
+                p.close();
+            }
             c.close();
             JOptionPane.showMessageDialog(null, "Completed");
             LoadData();
+            SetDefaultText();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(evt.getClickCount()==2){
+            int row = jTable1.getSelectedRow();
+            txtPositionID.setText(jTable1.getValueAt(row, 0).toString());
+            txtPositionName.setText(jTable1.getValueAt(row, 1).toString());
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        SetDefaultText();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to Delete?","Message",JOptionPane.YES_NO_OPTION);
+            if(dialogResult==JOptionPane.YES_OPTION){
+                Connection c = ConnectDB.getConection();
+                String delete = "Delete tbl_Positions where PositionID=?";
+                PreparedStatement p = c.prepareStatement(delete);
+                p.setInt(1, Integer.parseInt(txtPositionID.getText()));
+                p.executeUpdate();
+                p.close();
+                c.close();
+                LoadData();
+                SetDefaultText();
+            }
+    
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

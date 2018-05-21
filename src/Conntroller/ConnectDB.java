@@ -1,5 +1,5 @@
 
-package Class;
+package Conntroller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
