@@ -16,7 +16,6 @@ public class frmCategory extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnNew = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -35,10 +34,6 @@ public class frmCategory extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 153, 255)));
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
-
-        btnNew.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
-        btnNew.setText("ສ້າງໃໝ່");
-        jPanel2.add(btnNew);
 
         btnSave.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnSave.setText("ບັນທຶກ");
@@ -159,7 +154,6 @@ public class frmCategory extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

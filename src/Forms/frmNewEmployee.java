@@ -3,6 +3,7 @@ package Forms;
 
 import Conntroller.ConnectDB;
 import Conntroller.GetMaxID;
+import static Conntroller.GlobalVariable.empID;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -45,6 +46,44 @@ public class frmNewEmployee extends javax.swing.JDialog {
             rs.close();
             c.close();
         } catch (SQLException e) {
+        }
+    }
+    private void LoadDataEdit(){
+        try {
+            Connection c = ConnectDB.getConection();
+            String query = "Select e.empID,p.PostionName,e.EmpName,e.empsurname,e.gender,\n"
+                    + "e.DOB,e.Phone,e.email,e.address,e.Imges\n"
+                    + "from Tbl_Employees e inner join \n"
+                    + "Tbl_Positions p on e.PositionID=p.PositionID\n"
+                    + "where e.EmpID='"+txtEmpID.getText().trim()+"'";
+            ResultSet rs = c.createStatement().executeQuery(query);
+            if(rs.next()){
+                cmbPosition.setSelectedItem(rs.getString("PostionName"));
+                txtEmpName.setText(rs.getString("EmpName"));
+                txtEmpSurname.setText(rs.getString("empsurname"));
+                String sex = rs.getString("gender");
+                if(sex=="ຍິງ"){
+                    radFemale.setSelected(true);
+                }else{
+                    radMale.setSelected(true);
+                }
+                txtDOB.setDate(rs.getDate("DOB"));
+                txtPhone.setText(rs.getString("Phone"));
+                txtEmail.setText(rs.getString("email"));
+                txtAddress.setText(rs.getString("address"));
+                byte[] picture;
+                picture=rs.getBytes("Imges");
+                if(picture==null){
+                    lblImage.setIcon(null);
+                }else{
+                    Image img = new ImageIcon(picture).getImage();
+                    Image ic =ResizeScall(img, lblImage.getWidth(), lblImage.getHeight());
+                    lblImage.setIcon(new ImageIcon(ic));
+                }
+                rs.close();
+                c.close();
+            }
+        } catch (Exception e) {
         }
     }
     @SuppressWarnings("unchecked")
@@ -319,8 +358,13 @@ public class frmNewEmployee extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            Date now  =  new Date();
-            txtDOB.setDate(now);
+            if("".equals(empID)){
+                Date now  =  new Date();
+                txtDOB.setDate(now);
+            }else{
+                txtEmpID.setText(empID);
+                LoadDataEdit();
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_formWindowOpened
@@ -379,9 +423,39 @@ public class frmNewEmployee extends javax.swing.JDialog {
                 }
                 p.executeUpdate();
             } else {
-                
+                String update = "Update Tbl_Employees set PositionID=?,EmpName=?,EmpSurname=?,Gender=?,"
+                        + "DOB=?,Phone=?,email=?,Address=? where EmpID=?";
+                PreparedStatement p = c.prepareStatement(update);
+                p.setInt(1, Integer.parseInt(array_Pos.get(index).toString()));
+                p.setString(2, txtEmpName.getText().trim());
+                p.setString(3, txtEmpSurname.getText().trim());
+                if(radMale.isSelected()){
+                    sex="ຊາຍ";
+                }else{
+                    sex="ຍິງ";
+                }
+                p.setString(4, sex);
+                p.setString(5, bd);
+                p.setString(6, txtPhone.getText().trim());
+                p.setString(7, txtEmail.getText().trim());
+                p.setString(8, txtAddress.getText().trim());
+                p.setString(9, txtEmpID.getText().trim());
+                if (p.executeUpdate() != -1) {
+                    if (path != null) {
+                        String update1 = "Update Tbl_Employees set Imges=? where empID=?";
+                        PreparedStatement p1 = c.prepareStatement(update1);
+                        File ff = new File(path);
+                        FileInputStream fst = new FileInputStream(ff);
+                        int len = (int) ff.length();
+                        p1.setBinaryStream(1, fst, len);
+                        p1.setString(2, txtEmpID.getText().trim());
+                        p1.executeUpdate();
+                        p1.close();
+                    }
+                }
+                p.close();
             }
-            
+            c.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
