@@ -379,8 +379,6 @@ public class frmNewEmployee extends javax.swing.JDialog {
                 Image img = new ImageIcon(path).getImage();
                 Image ic = ResizeScall(img,lblImage.getWidth(),lblImage.getHeight());
                 lblImage.setIcon(new ImageIcon(ic));
-                File ff = new File(path);
-               Img_emp = new FileInputStream(ff);
             }
         } catch (Exception e) {
         }
