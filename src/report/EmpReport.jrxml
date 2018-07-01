@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmpReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9002dabe-663b-4cf1-a0d3-482782dd7773">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Gender}.trim()=="ຊາຍ"]]></conditionExpression>
+			<style/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT dbo.Tbl_Employees.EmpID, dbo.Tbl_Positions.PostionName,
+dbo.Tbl_Employees.EmpName, dbo.Tbl_Employees.EmpSurname,
+dbo.Tbl_Employees.Gender, dbo.Tbl_Employees.DOB, dbo.Tbl_Employees.Phone,
+dbo.Tbl_Employees.email, dbo.Tbl_Employees.Address,
+iif(dbo.Tbl_Employees.Gender=N'ຊາຍ',Count(dbo.Tbl_Employees.EmpID),0) as CountMale
+FROM dbo.Tbl_Employees INNER JOIN
+dbo.Tbl_Positions ON dbo.Tbl_Employees.PositionID = dbo.Tbl_Positions.PositionID
+group by dbo.Tbl_Employees.EmpID, dbo.Tbl_Positions.PostionName,
+dbo.Tbl_Employees.EmpName, dbo.Tbl_Employees.EmpSurname,
+dbo.Tbl_Employees.Gender, dbo.Tbl_Employees.DOB, dbo.Tbl_Employees.Phone,
+dbo.Tbl_Employees.email, dbo.Tbl_Employees.Address]]>
+	</queryString>
+	<field name="EmpID" class="java.lang.String"/>
+	<field name="PostionName" class="java.lang.String"/>
+	<field name="EmpName" class="java.lang.String"/>
+	<field name="EmpSurname" class="java.lang.String"/>
+	<field name="Gender" class="java.lang.String"/>
+	<field name="DOB" class="java.lang.String"/>
+	<field name="Phone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="Address" class="java.lang.String"/>
+	<field name="CountMale" class="java.lang.Integer"/>
+	<variable name="empCount" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{EmpID}]]></variableExpression>
+	</variable>
+	<variable name="CountMale_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{CountMale}]]></variableExpression>
+	</variable>
+	<variable name="CountFemale" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="284" y="11" width="224" height="36" uuid="9b9caaf9-97aa-48fc-b6e7-e5c856b09684"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="24"/>
+				</textElement>
+				<text><![CDATA[ລາຍງານພະນັກງານ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="49" height="20" uuid="e4a8e195-6818-4812-9d3f-bb0f827837a1"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະຫັດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="2" width="163" height="20" uuid="6724f2a9-fbf7-4f0d-92a2-236312eb71e3"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຊື່ພະນັກງານ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="2" width="126" height="20" uuid="3b09884f-7027-4a5f-aa8b-6c4432e9c030"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ນາມສະກຸນ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="471" y="2" width="35" height="20" uuid="8814ec2b-34a8-47cd-9bfb-72bb8d2b1cbd"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ເພດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="508" y="2" width="78" height="20" uuid="0a7679c7-1a8b-469a-b0ff-efa36dce3a10"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ວັນເກີດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="2" width="130" height="20" uuid="1953afe9-cc60-4a30-a75f-aedb5aa27082"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຕຳແໜ່ງ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="588" y="2" width="214" height="20" uuid="ac70489b-dc69-4d8c-9512-84cd148090ee"/>
+				<textElement>
+					<font fontName="Lao Unicode"/>
+				</textElement>
+				<text><![CDATA[ທີ່ຢູ່ຂອງພະນັກງານ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="23" width="802" height="1" uuid="a12cd867-b456-433a-8125-7312083a4ef6"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" uuid="20561ead-5207-4cdb-ac64-6e5d2d984565"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="49" height="20" uuid="c94b8eb9-1979-4771-a256-ac16058e9c11"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EmpID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="3" width="130" height="20" uuid="c2a8ae25-2b86-4793-a019-0d650f1b2a09"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PostionName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="3" width="163" height="20" uuid="bf55ae2e-7115-43eb-9728-e465a85cb08c"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EmpName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="3" width="126" height="20" uuid="51c0bbc1-3061-4202-a84c-f4c9ad61ddcc"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EmpSurname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="3" width="35" height="20" uuid="731f8b32-fb2b-4ea1-850b-b5fffbda5b5e"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Gender}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="508" y="3" width="78" height="20" uuid="13c2284c-8007-47fd-b605-862fab7d436a"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="588" y="3" width="214" height="20" uuid="38eaf456-cf15-44d6-b82e-a84133de8827"/>
+				<textElement>
+					<font fontName="Lao Unicode"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Address}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="20" uuid="8b599fe7-a8e5-4b56-9ba4-335da8fa089d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="102" y="4" width="100" height="20" uuid="8126d4d0-ed94-41da-8817-6e52e1cd06cb"/>
+				<textFieldExpression><![CDATA[$V{empCount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="4" width="100" height="20" uuid="724a28aa-a1df-4666-9bfc-1520f3ca3c6c"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຈຳນວນພະນັງການ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="4" width="29" height="20" uuid="a1789201-8467-4b5e-a094-16b934cefd6b"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຊາຍ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="4" width="22" height="20" uuid="0aca6a12-a392-4a53-9121-3356ddb3c65b"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຍິງ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="235" y="4" width="26" height="20" uuid="ffe7a140-9aa9-43d9-aa38-7986e8635817"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CountMale_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="4" width="100" height="20" uuid="291dbbd9-f2b2-45ed-ac9f-c7a991d131e0"/>
+				<textFieldExpression><![CDATA[$V{empCount}-$V{CountMale_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="802" height="1" uuid="d5a5092a-fbf0-4728-a208-26b7e8815274"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

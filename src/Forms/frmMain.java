@@ -1,6 +1,8 @@
 
 package Forms;
 
+import Conntroller.DisplayReport;
+import Conntroller.GlobalVariable;
 import javax.swing.JFrame;
 
 
@@ -11,9 +13,26 @@ public class frmMain extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         System.err.println(this.getClass().getSimpleName());
-
+        if("admin".equals(GlobalVariable.userType.trim())){
+            adminPermission();
+        }else{
+            staffPermission();
+        }
     }
-
+    private void adminPermission(){
+        jTaskPaneGroup1.setVisible(true);
+        jTaskPaneGroup2.setVisible(true);
+        jTaskPaneGroup3.setVisible(true);
+        jTaskPaneGroup4.setVisible(true);
+        jTaskPaneGroup5.setVisible(true);
+    }
+    private void staffPermission(){
+        jTaskPaneGroup1.setVisible(true);
+        jTaskPaneGroup2.setVisible(false);
+        jTaskPaneGroup3.setVisible(false);
+        jTaskPaneGroup4.setVisible(false);
+        jTaskPaneGroup5.setVisible(false);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,6 +136,7 @@ public class frmMain extends javax.swing.JFrame {
 
         jTaskPane1.add(jTaskPaneGroup2);
 
+        jTaskPaneGroup3.setExpanded(false);
         jTaskPaneGroup3.setTitle("ຂໍ້ມູນພະນັກງານ");
         jTaskPaneGroup3.setFont(new java.awt.Font("Saysettha OT", 1, 14)); // NOI18N
 
@@ -144,7 +164,6 @@ public class frmMain extends javax.swing.JFrame {
 
         jTaskPane1.add(jTaskPaneGroup3);
 
-        jTaskPaneGroup4.setExpanded(false);
         jTaskPaneGroup4.setTitle("ລາຍງານ");
         jTaskPaneGroup4.setFont(new java.awt.Font("Saysettha OT", 1, 14)); // NOI18N
 
@@ -152,6 +171,11 @@ public class frmMain extends javax.swing.JFrame {
         btnMenuRptEmp.setText("ພະນັກງານ");
         btnMenuRptEmp.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnMenuRptEmp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMenuRptEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuRptEmpActionPerformed(evt);
+            }
+        });
         jTaskPaneGroup4.getContentPane().add(btnMenuRptEmp);
 
         btnMenuRptProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/medial-report-icon.png"))); // NOI18N
@@ -164,12 +188,22 @@ public class frmMain extends javax.swing.JFrame {
         btnMenuRptSaleByDate.setText("ການຂາຍຕາມວັນທີ່");
         btnMenuRptSaleByDate.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnMenuRptSaleByDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMenuRptSaleByDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuRptSaleByDateActionPerformed(evt);
+            }
+        });
         jTaskPaneGroup4.getContentPane().add(btnMenuRptSaleByDate);
 
         btnMenuSaleDuring.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/medial-report-icon.png"))); // NOI18N
         btnMenuSaleDuring.setText("ການຂາຍຕາມຊ່ວງໄລຍະ");
         btnMenuSaleDuring.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnMenuSaleDuring.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMenuSaleDuring.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuSaleDuringActionPerformed(evt);
+            }
+        });
         jTaskPaneGroup4.getContentPane().add(btnMenuSaleDuring);
 
         btnMenuSaleByEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/medial-report-icon.png"))); // NOI18N
@@ -188,6 +222,11 @@ public class frmMain extends javax.swing.JFrame {
         btnMenuUser.setText("ຜູ້ໃຊ້ລະບົບ");
         btnMenuUser.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnMenuUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMenuUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuUserActionPerformed(evt);
+            }
+        });
         jTaskPaneGroup5.getContentPane().add(btnMenuUser);
 
         btnMenuHelp.setText("ຊ່ວຍເຫຼືອ");
@@ -262,6 +301,33 @@ public class frmMain extends javax.swing.JFrame {
     private void btnMenuSearchSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuSearchSaleActionPerformed
 
     }//GEN-LAST:event_btnMenuSearchSaleActionPerformed
+
+    private void btnMenuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuUserActionPerformed
+       frmUsers U = new frmUsers();
+        jDesktopPane1.add(U);
+        U.setVisible(true);
+    }//GEN-LAST:event_btnMenuUserActionPerformed
+
+    private void btnMenuRptEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuRptEmpActionPerformed
+        try {
+            DisplayReport dp = new DisplayReport();
+            dp.myReport("EmpReport");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnMenuRptEmpActionPerformed
+
+    private void btnMenuRptSaleByDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuRptSaleByDateActionPerformed
+        frmSaleRPTByDate U = new frmSaleRPTByDate();
+        jDesktopPane1.add(U);
+        U.setVisible(true);
+    }//GEN-LAST:event_btnMenuRptSaleByDateActionPerformed
+
+    private void btnMenuSaleDuringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuSaleDuringActionPerformed
+        frmSaleRPTDurDate U = new frmSaleRPTDurDate();
+        jDesktopPane1.add(U);
+        U.setVisible(true);
+    }//GEN-LAST:event_btnMenuSaleDuringActionPerformed
 
     /**
      * @param args the command line arguments

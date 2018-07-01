@@ -12,7 +12,7 @@ public class GetMaxID {
     public String autoMaxID(String table,String colID,String front){
         try {
             Connection c = ConnectDB.getConection();
-            String query ="Select empID from Tbl_Employees";
+            String query ="Select * from "+table+"";
             ResultSet rs1=c.createStatement().executeQuery(query);
             if(rs1.next()){
                 sql="Select '"+front+"'+CONVERT(nchar(5),isnull(Max(SubString("+colID+",2,5)),0)+1) as AutoID from "+table+"";

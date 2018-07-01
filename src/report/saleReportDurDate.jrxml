@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Sale Report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9002dabe-663b-4cf1-a0d3-482782dd7773">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Gender}.trim()=="ຊາຍ"]]></conditionExpression>
+			<style/>
+		</conditionalStyle>
+	</style>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select * from vw_saleReport where SaleDate between $P{startDate} and $P{endDate}]]>
+	</queryString>
+	<field name="SaleID" class="java.lang.String"/>
+	<field name="SaleDate" class="java.util.Date"/>
+	<field name="UserName" class="java.lang.String"/>
+	<field name="SubTotal" class="java.lang.Double"/>
+	<field name="DiscPC" class="java.lang.Double"/>
+	<field name="DiscAmount" class="java.lang.Double"/>
+	<field name="GrandTotal" class="java.lang.Double"/>
+	<field name="ProductName" class="java.lang.String"/>
+	<field name="CateName" class="java.lang.String"/>
+	<field name="Price" class="java.lang.Double"/>
+	<field name="Qty" class="java.lang.Integer"/>
+	<field name="UnitName" class="java.lang.String"/>
+	<field name="Total" class="java.lang.Double"/>
+	<variable name="SubTotal_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{SubTotal}]]></variableExpression>
+	</variable>
+	<variable name="DiscAmount_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{DiscAmount}]]></variableExpression>
+	</variable>
+	<variable name="GrandTotal_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{GrandTotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="147" y="11" width="302" height="36" uuid="9b9caaf9-97aa-48fc-b6e7-e5c856b09684"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="24"/>
+				</textElement>
+				<text><![CDATA[ລາຍງານການຂາຍຕາມວັນທີ່]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement x="0" y="4" width="48" height="20" uuid="6d683a4c-0958-4cd2-91c9-bd55e76bd2a7"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະຫັດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="4" width="70" height="20" uuid="b4406807-8964-4028-810f-9d47be77c2e5"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ່ຈາຍ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="4" width="118" height="20" uuid="459d8fb3-1d67-46bb-822d-f923ad45ed3f"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ພະນັກງານຂາຍ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="4" width="90" height="20" uuid="dd7eb9eb-87f5-4b1c-b096-c256104c9d83"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລວມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="4" width="37" height="20" uuid="e588d107-68de-4e1f-93d4-956f2495eb7b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[(%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="4" width="59" height="20" uuid="b7ee326c-b68f-4136-8f9e-3febeb6352c4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ສ່ວນຫຼຸດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="4" width="100" height="20" uuid="a4bfd911-e2bd-4b05-aa51-0e3721e75a40"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຍອດລວມ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="b8cf22c9-7170-4d84-8d94-d186de83eb29"/>
+			</line>
+			<line>
+				<reportElement x="0" y="26" width="554" height="1" uuid="036e9ea0-e28e-475f-9328-83f541ea41e4"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="48" height="20" uuid="94e2d5ca-9210-4a71-892d-0d7220cedc65"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SaleID}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="48" y="2" width="70" height="20" uuid="1b93a84f-b6eb-4e30-98fd-4fbfb94d8e91"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SaleDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="2" width="118" height="20" uuid="6ed9c370-de61-47b1-89b1-84d51e0d8c21"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UserName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="236" y="2" width="90" height="20" uuid="5a46917d-0f3e-4c54-848d-e16b37996cfe"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="352" y="2" width="37" height="20" uuid="afa511c6-96e3-47ac-8aa9-cb4eeb3f5c79"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiscPC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="391" y="2" width="59" height="20" uuid="110b1768-651a-45ca-b75d-e6609f321738"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiscAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="454" y="2" width="100" height="20" uuid="2f614f6b-9475-40e9-9ccc-2710cb045fe1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GrandTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="8b599fe7-a8e5-4b56-9ba4-335da8fa089d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="236" y="7" width="90" height="20" uuid="40ca97e2-3658-4712-8f46-dca674165424"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SubTotal_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="349" y="7" width="100" height="20" uuid="4e1640f2-5402-4edc-adfd-9447dfe7cc35"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DiscAmount_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="455" y="7" width="100" height="20" uuid="f61993a8-08fc-4579-9cac-243c14ed75b5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GrandTotal_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="128" y="2" width="426" height="1" uuid="17383183-ad98-46ad-8cce-734777cd8521"/>
+			</line>
+			<staticText>
+				<reportElement x="104" y="6" width="118" height="20" uuid="fbfd50b2-8e7b-437f-8a07-76fd2bcc422b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລວມ:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

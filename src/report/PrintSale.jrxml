@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintSale" language="groovy" pageWidth="480" pageHeight="515" columnWidth="440" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d64bcb7a-5f5a-4189-aa62-3cc7ce68dc51">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="111"/>
+	<parameter name="saleID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select * from vw_PrintSale where SaleID=$P{saleID}]]>
+	</queryString>
+	<field name="SaleID" class="java.lang.String"/>
+	<field name="SaleDate" class="java.util.Date"/>
+	<field name="UserName" class="java.lang.String"/>
+	<field name="ProductID" class="java.lang.String"/>
+	<field name="ProductName" class="java.lang.String"/>
+	<field name="CateName" class="java.lang.String"/>
+	<field name="Price" class="java.lang.Double"/>
+	<field name="Qty" class="java.lang.Integer"/>
+	<field name="UnitName" class="java.lang.String"/>
+	<field name="Total" class="java.lang.Double"/>
+	<field name="SubTotal" class="java.lang.Double"/>
+	<field name="DiscPC" class="java.lang.Double"/>
+	<field name="DiscAmount" class="java.lang.Double"/>
+	<field name="GrandTotal" class="java.lang.Double"/>
+	<variable name="SubTotal_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{SubTotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="124" splitType="Stretch">
+			<staticText>
+				<reportElement x="172" y="30" width="100" height="20" uuid="27891824-0981-4930-8d6c-b9ee66f9cce2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ໃບບິນຂາຍ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="142" height="15" uuid="4583f830-7e52-4828-8ecd-55d586335f55"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ຮ້ານຂາຍເຄື່ອງ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="142" height="15" uuid="4daccc4b-9c04-41f1-86c7-5902fbe36fd8"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ໂທຣ: 020 99967708]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="142" height="15" uuid="11054d01-f656-44fb-b892-a0731d4c6bfa"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ອີເມວ: meexiong@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="46" width="142" height="15" uuid="a012ed49-e338-4d07-8844-de0a75707aa3"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ບ້ານ ດົງໂດກ, ນະຄອນຫຼວງ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="25" width="56" height="16" uuid="923b6fe7-6dd4-4814-9e7f-847624fd04b1"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ່ຂາຍ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="41" width="46" height="16" uuid="ebad617a-5daf-4d1c-8137-16f0ca495115"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ເລກບິນ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="103" width="87" height="18" uuid="1af4ff4c-ebaa-4deb-89e3-a359a2cd0207"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ພະນັກງານຂາຍ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="103" width="100" height="18" uuid="c8c4c1e9-7da3-470d-86e4-c335d0528cf2"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UserName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="41" width="77" height="16" uuid="f643b869-f62c-4c41-af1b-652eb68760d5"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{saleID}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="373" y="25" width="67" height="16" uuid="9535eb99-e503-496d-850c-93ada9d7ee28"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SaleDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="1" width="48" height="16" uuid="79ed3db1-09be-4d74-a981-df730e79f4d9"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະຫັດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="1" width="154" height="16" uuid="0507cf50-1a6e-443a-b9ef-6fadbc6cab2a"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຊື່ສິນຄ້າ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="1" width="56" height="16" uuid="2bc4d7c7-d9b4-4d04-98cc-aba8e01fa70d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລາຄາ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="1" width="39" height="16" uuid="31926a86-4668-40db-9323-6ffa1b5867f9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຈຳນວນ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="1" width="49" height="16" uuid="38558b35-7a23-4032-847d-808b60eb469d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຫົວໜ່ວຍ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="1" width="67" height="16" uuid="2fa32da6-538c-4a3d-85fe-39d77e7fc32c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລວມ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="440" height="1" uuid="904b2021-ab85-42db-b383-ca0e3328f25d"/>
+			</line>
+			<line>
+				<reportElement x="0" y="18" width="440" height="1" uuid="d7c71700-5529-4d28-87c8-b6383755ff3e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="48" height="16" uuid="0af2830e-13e2-4f3d-8420-a3923b0fa331"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ProductID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="0" width="154" height="16" uuid="c1fca8bd-97ed-46b8-998a-8a7efd55f7ff"/>
+				<textElement>
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ProductName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="209" y="0" width="56" height="16" uuid="7df10c40-ed68-4f72-8639-a59346e9c04d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Price}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="276" y="0" width="39" height="16" uuid="c4040632-28f1-49e7-898d-61eb607379fc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="0" width="49" height="16" uuid="60640b1d-12fb-4377-8a5f-e118e94532ad"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UnitName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="369" y="0" width="67" height="16" uuid="88b13f75-4683-4e62-a335-884450e3d6a2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="32">
+			<staticText>
+				<reportElement x="0" y="2" width="440" height="14" uuid="3e721b86-e166-42e0-8af0-0b58a0b26a3c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode"/>
+				</textElement>
+				<text><![CDATA[ຂອບໃຂລູກຄ້າທີ່ມາສະໜັບສະໜູນ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="79" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="3" width="440" height="1" uuid="cb67f5a0-e45d-415e-aacf-32c5a90ad51d"/>
+			</line>
+			<textField pattern="#,##0">
+				<reportElement x="323" y="25" width="19" height="16" uuid="e5911bac-0d40-459e-b262-81254d7c43ea"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiscPC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="323" y="8" width="88" height="16" uuid="b04e4357-e2ed-40d5-88e5-743d52c578b9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="342" y="25" width="69" height="16" uuid="b06d2214-49ff-4f42-a978-52936de4546b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiscAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="323" y="42" width="88" height="16" uuid="d5e160bb-7ffc-4c18-a39e-1b338c5a80b6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GrandTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="238" y="9" width="78" height="16" uuid="671377e0-0bb7-48dc-af0f-95ef28e6f4a8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ລາຄາລວມ  =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="26" width="78" height="16" uuid="4cb7c469-b65c-49e8-a344-f88893ab8895"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ສ່ວນຫຼຸດ  =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="43" width="96" height="16" uuid="9d5a193d-9f26-4798-ab26-73243f02c96b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ຍອດຕ້ອງຈ່າຍ  =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="8" width="23" height="16" uuid="4f85b46b-3f94-41f1-9a42-708914452eae"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ກີບ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="25" width="23" height="16" uuid="865f5ef2-6b2e-47c2-a558-10b6818b402f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ກີບ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="42" width="23" height="16" uuid="48bbbcd2-1b66-46ed-bebc-fe057e3bd355"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lao Unicode" size="12"/>
+				</textElement>
+				<text><![CDATA[ກີບ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

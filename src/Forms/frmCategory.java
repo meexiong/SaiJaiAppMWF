@@ -37,6 +37,11 @@ public class frmCategory extends javax.swing.JInternalFrame {
 
         btnSave.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnSave.setText("ບັນທຶກ");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSave);
 
         btnDelete.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
@@ -149,6 +154,10 @@ public class frmCategory extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

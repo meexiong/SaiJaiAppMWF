@@ -2,12 +2,17 @@
 package Forms;
 
 import Conntroller.ConnectDB;
+import Conntroller.GetMaxID;
+import Conntroller.GlobalVariable;
+import static Conntroller.GlobalVariable.productID;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -63,6 +68,23 @@ public class frmNewProduct extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }
+    private void showData(){
+        try {
+            Connection c= ConnectDB.getConection();
+            String sql="Select p.ProductName, c.CateName, p.Price, p.Qty, u.UnitName, p.Total from tbl_Products p inner join tbl_Categorys c on p.CateID= c.CateID"
+                    + " inner join tbl_Units u on p.UnitID = u.UnitID where p.ProductID = '"+txtProductID1.getText().trim()+"'";
+            ResultSet rs = c.createStatement().executeQuery(sql);
+            if(rs.next()){
+                txtProductName1.setText(rs.getString(1));
+                cmb_Cate.setSelectedItem(rs.getString(2));
+                txtPrice.setText(String.valueOf(String.format("%,.0f",rs.getDouble(3))));
+                txtQty.setText(String.valueOf(String.format("%d",rs.getInt(4))));
+                cmb_Unit.setSelectedItem(rs.getString(5));
+                txtTotalPrice.setText(String.valueOf(String.format("%,.0f", rs.getDouble(6))));
+            }
+        } catch (Exception e) {
+        }
+    }
     private BufferedImage ResizeScall(Image img, int w, int h){
         BufferedImage ims = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
         Graphics2D g = ims.createGraphics();
@@ -96,6 +118,8 @@ public class frmNewProduct extends javax.swing.JDialog {
         cmb_Unit = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         lblImage = new javax.swing.JLabel();
+        cmb_Currency = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,6 +145,11 @@ public class frmNewProduct extends javax.swing.JDialog {
 
         btnSave.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
         btnSave.setText("ບັນທຶກ");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnSave);
 
         btnDelete.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
@@ -212,6 +241,12 @@ public class frmNewProduct extends javax.swing.JDialog {
             .addComponent(lblImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
         );
 
+        cmb_Currency.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
+        cmb_Currency.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ກີບ", "ບາດ", "ໂດລາ" }));
+
+        jLabel10.setFont(new java.awt.Font("Saysettha OT", 0, 12)); // NOI18N
+        jLabel10.setText("ສະກຸນເງິນ");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -219,22 +254,29 @@ public class frmNewProduct extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmb_Unit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmb_Cate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProductName1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProductID1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmb_Currency, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmb_Unit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmb_Cate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtProductName1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtProductID1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(29, 29, 29)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -275,7 +317,11 @@ public class frmNewProduct extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(cmb_Currency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -312,6 +358,10 @@ public class frmNewProduct extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         showCategory();
         showUnit();
+        txtProductID1.setText(productID);
+        if(!"New".equals(txtProductID1.getText().trim())){
+            showData();
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
@@ -331,10 +381,19 @@ public class frmNewProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_lblImageMouseClicked
 
     private void txtQtyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQtyKeyReleased
-        double price = Double.parseDouble(txtPrice.getText().replace(",", ""));
-        int qty = Integer.parseInt(txtQty.getText());
-        double Total = price*qty;
-        txtTotalPrice.setText(String.valueOf(String.format("%,.2f", Total)));
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)|| (c == KeyEvent.VK_BACK_SPACE)|| (c == KeyEvent.VK_DELETE)||c==KeyEvent.VK_SPACE)) {
+            evt.consume();
+            txtQty.setText("0");
+        }else {
+            double p = Double.parseDouble(txtQty.getText().replace(",", ""));
+            txtQty.setText(String.valueOf(String.format("%,.0f", p)));
+            double price = Double.parseDouble(txtPrice.getText().replace(",", ""));
+            int qty = Integer.parseInt(txtQty.getText());
+            double Total = price * qty;
+            txtTotalPrice.setText(String.valueOf(String.format("%,.2f", Total)));
+        }
+        
     }//GEN-LAST:event_txtQtyKeyReleased
 
     private void txtPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyReleased
@@ -352,6 +411,69 @@ public class frmNewProduct extends javax.swing.JDialog {
     private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
 
     }//GEN-LAST:event_txtPriceActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try {
+            Connection c = ConnectDB.getConection();
+            int cateIndex = cmb_Cate.getSelectedIndex();
+            int unitIndex = cmb_Unit.getSelectedIndex();
+            if (txtProductID1.getText().equals("New")) {
+                String insert = "Insert into tbl_Products(ProductID,ProductName,CateID,Price,Qty,UnitID,Total,Images,Currency)"
+                        + "values(?,?,?,?,?,?,?,?,?)";
+                GetMaxID gm = new GetMaxID();
+                String productID = gm.autoMaxID("tbl_Products", "ProductID", "P");
+                PreparedStatement p = c.prepareStatement(insert);
+                p.setString(1, productID);
+                p.setString(2, txtProductName1.getText().trim());
+                p.setInt(3, array_Cate.get(cateIndex));
+                p.setDouble(4, Double.parseDouble(txtPrice.getText().replace(",", "")));
+                p.setFloat(5, Float.parseFloat(txtQty.getText().replace(",", "")));
+                p.setInt(6, array_Unit.get(unitIndex));
+                p.setDouble(7, Double.parseDouble(txtTotalPrice.getText().replace(",", "")));
+                if (path == null) {
+                    p.setNull(8, java.sql.Types.BLOB);
+                } else {
+                    File ff = new File(path);
+                    FileInputStream fst = new FileInputStream(ff);
+                    int len = (int) ff.length();
+                    p.setBinaryStream(8, fst, len);
+                }
+                p.setString(9, cmb_Currency.getSelectedItem().toString());
+                p.executeUpdate();
+                p.close();
+            } else {
+                String update ="Update tbl_Products set ProductName=?, CateID=?,Price=?, qty=?, UnitID=?"
+                        + ", Total=?,Currency=? where ProductID=?";
+                PreparedStatement p = c.prepareStatement(update);
+                p.setString(1, txtProductName1.getText().trim());
+                p.setInt(2, array_Cate.get(cateIndex));
+                p.setDouble(3, Double.parseDouble(txtPrice.getText().replace(",", "")));
+                p.setFloat(4, Float.parseFloat(txtQty.getText().replace(",", "")));
+                p.setInt(5, array_Unit.get(unitIndex));
+                p.setDouble(6, Double.parseDouble(txtTotalPrice.getText().replace(",", "")));
+                p.setString(7, cmb_Currency.getSelectedItem().toString());
+                p.setString(8, txtProductID1.getText().trim());
+                if(p.executeUpdate() != -1) {
+                    String updateImage = "update tbl_Products set Images=? where ProductID=?";
+                    PreparedStatement p1 = c.prepareStatement(updateImage);
+                    if (path != null) {
+                        File ff = new File(path);
+                        FileInputStream fst = new FileInputStream(ff);
+                        int len = (int) ff.length();
+                        p1.setBinaryStream(1, fst, len);
+                        p1.setString(2, txtProductID1.getText().trim());
+                        p1.executeUpdate();
+                        p1.close();
+                    }
+                }
+                p.close();
+            }
+            c.close();
+            dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,9 +524,9 @@ public class frmNewProduct extends javax.swing.JDialog {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmb_Cate;
+    private javax.swing.JComboBox<String> cmb_Currency;
     private javax.swing.JComboBox<String> cmb_Unit;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -414,15 +536,12 @@ public class frmNewProduct extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lblImage;
     private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductID1;
-    private javax.swing.JTextField txtProductName;
     private javax.swing.JTextField txtProductName1;
     private javax.swing.JTextField txtQty;
     private javax.swing.JTextField txtTotalPrice;
